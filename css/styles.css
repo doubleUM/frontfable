@@ -97,7 +97,8 @@ header.top {
 .compare-after .compare-badge { right: 14px; background: var(--surface-2); color: var(--accent); border: 1px solid var(--line); }
 
 .mock-old { position: absolute; inset: 0; padding: clamp(16px,4vw,40px); color: var(--old-ink); font-family: Arial, Helvetica, sans-serif; }
-.mock-old .mnav { display: flex; gap: 14px; font-size: 10.5px; color: var(--old-soft); margin-bottom: clamp(18px,4vw,40px); flex-wrap: wrap; }
+.mock-old .mnav { display: flex; gap: 14px; font-size: 10.5px; color: var(--old-soft); margin-bottom: clamp(10px,2vw,20px); flex-wrap: wrap; }
+.mock-old .wtag { font-size: clamp(9px,1.3vw,11px); font-style: italic; color: var(--old-soft); margin-bottom: clamp(8px,1.6vw,16px); }
 .mock-old h3 { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; font-size: clamp(1.1rem, 3.4vw, 2rem); color: var(--old-ink); margin: 0; }
 .mock-old p { font-size: clamp(10px, 1.6vw, 12.5px); color: var(--old-soft); max-width: 40ch; margin: 8px 0 0; }
 .mock-old .mbtn { display: inline-block; margin-top: 14px; background: var(--old-accent); color: #fff; font-size: 10.5px; padding: 8px 16px; text-decoration: underline; }
@@ -106,8 +107,9 @@ header.top {
 .mock-old .mline { height: 6px; background: #D2CFC5; margin-top: 8px; width: 80%; }
 
 .mock-new { position: absolute; inset: 0; padding: clamp(16px,4vw,40px); color: var(--ink); }
-.mock-new .mnav { display: flex; gap: 18px; font-size: 10.5px; color: var(--ink-faint); margin-bottom: clamp(18px,4vw,40px); }
-.mock-new h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.15rem, 3.6vw, 2.1rem); max-width: 12ch; }
+.mock-new .mnav { display: flex; gap: 18px; font-size: 10.5px; color: var(--ink-faint); margin-bottom: clamp(10px,2vw,20px); }
+.mock-new .kicker-mini { font-size: clamp(9px,1.3vw,10.5px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: clamp(6px,1.4vw,12px); }
+.mock-new h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.15rem, 3.6vw, 2.1rem); max-width: 13ch; }
 .mock-new p { font-size: clamp(10px, 1.6vw, 12.5px); color: var(--ink-soft); max-width: 32ch; margin: 10px 0 0; }
 .mock-new .mbtn { display: inline-block; margin-top: 16px; background: var(--accent); color: var(--accent-ink); font-size: 10.5px; font-weight: 700; padding: 9px 18px; border-radius: 999px; }
 .mock-new .mtags { display: flex; gap: 8px; margin-top: clamp(16px,4vw,34px); flex-wrap: wrap; }
