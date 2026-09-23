@@ -133,10 +133,10 @@ header.top {
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
 .marquee { margin-top: 56px; padding-block: 16px; border-block: 1px solid var(--line); overflow: hidden; }
-.marquee-track { display: flex; width: max-content; gap: 40px; animation: marquee 24s linear infinite; }
+.marquee-track { display: flex; width: max-content; animation: marquee 100s linear infinite; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
-.marquee-track span { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+.marquee-track span { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; padding-right: 36px; }
 .marquee-track span b { color: var(--accent); font-weight: 500; }
 
 section { padding-block: clamp(56px, 9vw, 96px); }
