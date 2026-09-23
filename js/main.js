@@ -15,7 +15,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   if (!compare || !before || !handle) return;
 
   function setPos(pct) {
-    pct = Math.min(96, Math.max(4, pct));
+    pct = Math.min(100, Math.max(0, pct));
     before.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
     handle.style.left = pct + '%';
     handle.setAttribute('aria-valuenow', Math.round(pct));
