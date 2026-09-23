@@ -9,16 +9,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
 });
 
 (function () {
-  var header = document.querySelector('header.top');
-  if (!header) return;
-  function updateHeader() {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-  }
-  updateHeader();
-  window.addEventListener('scroll', updateHeader, { passive: true });
-})();
-
-(function () {
   var compare = document.getElementById('compare');
   var before = document.getElementById('compareBefore');
   var handle = document.getElementById('compareHandle');
