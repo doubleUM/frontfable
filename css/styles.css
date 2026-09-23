@@ -108,7 +108,7 @@ header.top {
 .mock-old .wmeta { font-size: clamp(7.5px,1.1vw,9px); color: #A8A39A; margin-top: 6px; }
 
 .mock-new {
-  position: absolute; inset: 0; padding: clamp(16px,4vw,40px); color: var(--ink); overflow: hidden;
+  position: absolute; inset: 0; z-index: 0; padding: clamp(16px,4vw,40px); color: var(--ink); overflow: hidden;
   display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(14px,3vw,32px); align-items: start;
 }
 .mock-new .mnew-watermark {
