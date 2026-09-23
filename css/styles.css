@@ -115,24 +115,59 @@ header.top {
 .mock-old .wmeta { font-size: clamp(7.5px,1.1vw,9px); color: #A8A39A; margin-top: 6px; }
 
 .mock-new {
-  position: absolute; inset: 0; z-index: 0; padding: clamp(16px,4vw,40px); color: var(--ink);
-  display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(16px,3vw,28px); align-items: center;
+  position: absolute; inset: 0; z-index: 0; color: var(--ink);
+  display: flex; flex-direction: column;
 }
-.mock-new .mnav { display: flex; gap: 18px; font-size: 10.5px; color: var(--ink-faint); margin-bottom: clamp(10px,2vw,20px); }
-.mock-new .kicker-mini { font-size: clamp(9px,1.3vw,10.5px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: clamp(6px,1.4vw,12px); }
-.mock-new h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.3rem, 4vw, 2.35rem); line-height: 1.08; }
+.mock-new::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(color-mix(in srgb, var(--ink) 18%, transparent) 1px, transparent 1px);
+  background-size: 16px 16px;
+  mask-image: radial-gradient(circle at 78% 30%, black 0%, transparent 68%);
+  -webkit-mask-image: radial-gradient(circle at 78% 30%, black 0%, transparent 68%);
+}
+.mock-new .mnav-bar {
+  position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between;
+  padding: clamp(12px,2.4vw,20px) clamp(16px,4vw,40px); border-bottom: 1px solid var(--line);
+}
+.mock-new .mnav-brand { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(11px,1.7vw,14px); }
+.mock-new .mnav-brand .dot { color: var(--accent); }
+.mock-new .mnav-links { font-size: clamp(9px,1.3vw,11px); color: var(--ink-faint); }
+.mock-new .mnew-body {
+  position: relative; z-index: 1; flex: 1; display: grid; grid-template-columns: 1.15fr 1fr;
+  gap: clamp(16px,3vw,28px); align-items: center; padding: clamp(16px,3.4vw,36px) clamp(16px,4vw,40px);
+}
+.mock-new .mnew-foot {
+  position: relative; z-index: 1; padding: clamp(10px,2vw,16px) clamp(16px,4vw,40px); border-top: 1px solid var(--line);
+  font-size: clamp(8px,1.2vw,10px); color: var(--ink-faint); font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.mock-new .kicker-mini {
+  display: inline-block; font-size: clamp(9px,1.3vw,10.5px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent); margin-bottom: clamp(8px,1.6vw,14px); padding: 4px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.mock-new h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.3rem, 4vw, 2.35rem); line-height: 1.08; text-shadow: 0 2px 24px rgba(0,0,0,0.4); }
 .mock-new p { font-size: clamp(10.5px, 1.7vw, 13.5px); color: var(--ink-soft); margin: 12px 0 0; }
-.mock-new .mbtn { display: inline-block; margin-top: 18px; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700; padding: 10px 20px; border-radius: 999px; }
+.mock-new .mbtn {
+  display: inline-block; margin-top: 18px; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700;
+  padding: 10px 20px; border-radius: 999px; box-shadow: 0 10px 26px -8px color-mix(in srgb, var(--accent) 65%, transparent);
+}
 
-.mock-new .mini-chart-card { background: rgba(255,255,255,0.03); border: 1px solid var(--line); padding: clamp(12px,2.4vw,20px); }
+.mock-new .mini-chart-card {
+  background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line)); padding: clamp(12px,2.4vw,20px);
+  box-shadow: 0 24px 48px -22px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+}
 .mock-new .mini-chart-head { display: flex; justify-content: space-between; font-size: clamp(8.5px,1.3vw,10.5px); font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
 .mock-new .mini-chart-head span { color: var(--accent); font-family: 'JetBrains Mono', monospace; text-transform: none; letter-spacing: 0; }
 .mock-new .mini-chart-card svg { width: 100%; height: clamp(56px,10vw,96px); display: block; }
 .mock-new .mini-chart-foot { font-size: clamp(8px,1.2vw,9.5px); color: var(--ink-faint); margin-top: 10px; font-family: 'JetBrains Mono', monospace; }
 
 @media (max-width: 700px) {
-  .mock-new { display: block; }
+  .mock-new .mnew-body { display: block; }
   .mock-new .mcol-right { display: none; }
+  .mock-new .mnav-links { display: none; }
 }
 
 .compare-handle {
