@@ -108,38 +108,20 @@ header.top {
 .mock-old .wmeta { font-size: clamp(7.5px,1.1vw,9px); color: #A8A39A; margin-top: 6px; }
 
 .mock-new {
-  position: absolute; inset: 0; z-index: 0; padding: clamp(16px,4vw,40px); color: var(--ink); overflow: hidden;
-  display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(10px,2vw,20px); align-items: start;
+  position: absolute; inset: 0; z-index: 0; padding: clamp(16px,4vw,40px); color: var(--ink);
+  display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(16px,3vw,28px); align-items: center;
 }
-.mock-new .mnew-watermark {
-  position: absolute; inset: -20% -30%; z-index: 0; pointer-events: none; overflow: hidden;
-  display: flex; flex-direction: column; gap: 30px; transform: rotate(-13deg);
-  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.25em;
-  color: var(--ink); opacity: 0.035; white-space: nowrap;
-}
-.mock-new .mcol-left, .mock-new .mcol-right { position: relative; z-index: 1; }
 .mock-new .mnav { display: flex; gap: 18px; font-size: 10.5px; color: var(--ink-faint); margin-bottom: clamp(10px,2vw,20px); }
 .mock-new .kicker-mini { font-size: clamp(9px,1.3vw,10.5px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: clamp(6px,1.4vw,12px); }
-.mock-new h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.15rem, 3.6vw, 2.1rem); }
-.mock-new p { font-size: clamp(10px, 1.6vw, 12.5px); color: var(--ink-soft); margin: 10px 0 0; }
-.mock-new .fact-row-mini { display: flex; gap: 16px; margin-top: clamp(10px,2vw,18px); font-size: clamp(8.5px,1.2vw,10.5px); color: var(--ink-soft); flex-wrap: wrap; }
-.mock-new .fact-row-mini b { color: var(--ink); }
-.mock-new .mbtn { display: inline-block; margin-top: 16px; background: var(--accent); color: var(--accent-ink); font-size: 10.5px; font-weight: 700; padding: 9px 18px; border-radius: 999px; }
-.mock-new .capacity-mini { display: flex; align-items: center; gap: 8px; margin-top: clamp(14px,3vw,26px); font-size: clamp(8px,1.2vw,10px); color: var(--ink-faint); font-family: 'JetBrains Mono', monospace; }
-.mock-new .capacity-mini .dots { display: flex; gap: 2px; }
-.mock-new .capacity-mini .dots i { display: block; width: 6px; height: 6px; border: 1px solid var(--line); background: var(--ink-faint); font-style: normal; }
-.mock-new .capacity-mini .dots i.open { background: transparent; border-color: var(--accent); }
+.mock-new h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.3rem, 4vw, 2.35rem); line-height: 1.08; }
+.mock-new p { font-size: clamp(10.5px, 1.7vw, 13.5px); color: var(--ink-soft); margin: 12px 0 0; }
+.mock-new .mbtn { display: inline-block; margin-top: 18px; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700; padding: 10px 20px; border-radius: 999px; }
 
-.mock-new .mcol-right { display: flex; flex-direction: column; gap: clamp(8px,1.6vw,14px); }
-.mock-new .mini-chart-card, .mock-new .mini-case-card { background: rgba(255,255,255,0.03); border: 1px solid var(--line); padding: clamp(10px,2vw,16px); }
-.mock-new .mini-chart-head { display: flex; justify-content: space-between; font-size: clamp(8px,1.2vw,10px); font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+.mock-new .mini-chart-card { background: rgba(255,255,255,0.03); border: 1px solid var(--line); padding: clamp(12px,2.4vw,20px); }
+.mock-new .mini-chart-head { display: flex; justify-content: space-between; font-size: clamp(8.5px,1.3vw,10.5px); font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
 .mock-new .mini-chart-head span { color: var(--accent); font-family: 'JetBrains Mono', monospace; text-transform: none; letter-spacing: 0; }
-.mock-new .mini-chart-card svg { width: 100%; height: clamp(40px,7vw,68px); display: block; }
-.mock-new .mini-chart-foot { font-size: clamp(7.5px,1.1vw,9px); color: var(--ink-faint); margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
-.mock-new .mini-case-industry { font-size: clamp(7.5px,1.1vw,9px); color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; }
-.mock-new .mini-case-client { font-size: clamp(8px,1.2vw,10.5px); color: var(--ink-soft); margin-top: 6px; }
-.mock-new .mini-redacted { display: inline-block; background: repeating-linear-gradient(45deg, var(--ink-faint), var(--ink-faint) 3px, var(--surface-2) 3px, var(--surface-2) 6px); color: transparent; border-radius: 2px; padding: 0 3px; }
-.mock-new .mini-case-result { font-size: clamp(9px,1.3vw,11px); font-weight: 600; color: var(--ink); margin-top: 8px; }
+.mock-new .mini-chart-card svg { width: 100%; height: clamp(56px,10vw,96px); display: block; }
+.mock-new .mini-chart-foot { font-size: clamp(8px,1.2vw,9.5px); color: var(--ink-faint); margin-top: 10px; font-family: 'JetBrains Mono', monospace; }
 
 @media (max-width: 700px) {
   .mock-new { display: block; }
