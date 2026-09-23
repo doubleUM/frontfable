@@ -67,8 +67,8 @@ header.top {
 .hero::before {
   content: ""; position: absolute; top: -10%; left: 50%; width: 100vw; margin-left: -50vw; height: 620px; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--accent-2) 32%, transparent), transparent 58%),
-    radial-gradient(circle at 82% 12%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 55%);
+    radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--accent-2) 55%, transparent), transparent 68%),
+    radial-gradient(circle at 82% 12%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 65%);
   animation: drift 20s ease-in-out infinite alternate;
 }
 @keyframes drift { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(-2.5%, 2%, 0) scale(1.04); } }
