@@ -109,7 +109,7 @@ header.top {
 
 .mock-new {
   position: absolute; inset: 0; z-index: 0; padding: clamp(16px,4vw,40px); color: var(--ink); overflow: hidden;
-  display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(14px,3vw,32px); align-items: start;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(10px,2vw,20px); align-items: start;
 }
 .mock-new .mnew-watermark {
   position: absolute; inset: -20% -30%; z-index: 0; pointer-events: none; overflow: hidden;
@@ -120,8 +120,8 @@ header.top {
 .mock-new .mcol-left, .mock-new .mcol-right { position: relative; z-index: 1; }
 .mock-new .mnav { display: flex; gap: 18px; font-size: 10.5px; color: var(--ink-faint); margin-bottom: clamp(10px,2vw,20px); }
 .mock-new .kicker-mini { font-size: clamp(9px,1.3vw,10.5px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: clamp(6px,1.4vw,12px); }
-.mock-new h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.15rem, 3.6vw, 2.1rem); max-width: 13ch; }
-.mock-new p { font-size: clamp(10px, 1.6vw, 12.5px); color: var(--ink-soft); max-width: 32ch; margin: 10px 0 0; }
+.mock-new h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.15rem, 3.6vw, 2.1rem); }
+.mock-new p { font-size: clamp(10px, 1.6vw, 12.5px); color: var(--ink-soft); margin: 10px 0 0; }
 .mock-new .fact-row-mini { display: flex; gap: 16px; margin-top: clamp(10px,2vw,18px); font-size: clamp(8.5px,1.2vw,10.5px); color: var(--ink-soft); flex-wrap: wrap; }
 .mock-new .fact-row-mini b { color: var(--ink); }
 .mock-new .mbtn { display: inline-block; margin-top: 16px; background: var(--accent); color: var(--accent-ink); font-size: 10.5px; font-weight: 700; padding: 9px 18px; border-radius: 999px; }
