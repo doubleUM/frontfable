@@ -65,13 +65,14 @@ header.top {
 
 .hero { position: relative; padding-block: clamp(44px, 8vw, 76px) clamp(36px, 6vw, 56px); }
 .hero::before {
-  content: ""; position: absolute; top: -10%; left: 50%; width: 100vw; margin-left: -50vw; height: 620px; z-index: -1; pointer-events: none;
+  content: ""; position: absolute; top: -10%; left: 50%; width: 124vw; margin-left: -62vw; height: 620px; z-index: -1; pointer-events: none;
+  transform-origin: top center;
   background:
     radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--accent-2) 55%, transparent), transparent 68%),
     radial-gradient(circle at 82% 12%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 65%);
   animation: drift 7s ease-in-out infinite alternate;
 }
-@keyframes drift { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(-7%, 5%, 0) scale(1.1); } }
+@keyframes drift { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(-3%, 6%, 0) scale(1.15); } }
 @media (prefers-reduced-motion: reduce) { .hero::before { animation: none; } }
 
 .hero h1 { font-size: clamp(2.1rem, 5.4vw, 3.7rem); line-height: 1.05; margin-top: 16px; max-width: 20ch; }
