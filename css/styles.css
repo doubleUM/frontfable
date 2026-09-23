@@ -28,7 +28,10 @@ body {
   padding-inline: clamp(20px, 5.5vw, 68px);
   overflow-x: hidden;
   margin: 0;
+  opacity: 0;
 }
+body.is-ready { opacity: 1; transition: opacity 0.35s ease; }
+@media (prefers-reduced-motion: reduce) { body.is-ready { transition: none; } }
 
 h1, h2, h3 { font-family: 'Unbounded', ui-sans-serif, sans-serif; font-weight: 700; margin: 0; text-wrap: balance; }
 .wrap { max-width: 1180px; margin-inline: auto; }
@@ -186,8 +189,8 @@ section { padding-block: clamp(56px, 9vw, 96px); }
 .process-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
 @media (max-width: 780px) { .process-row { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .process-row { grid-template-columns: 1fr; } }
-.process-line { height: 2px; background: linear-gradient(90deg, var(--line) 0%, var(--accent) 50%, var(--line) 100%); background-size: 220% 100%; animation: sweep 7s linear infinite; margin-bottom: 22px; }
-@keyframes sweep { from { background-position: 220% 0; } to { background-position: -220% 0; } }
+.process-line { height: 2px; background: repeating-linear-gradient(90deg, var(--line) 0%, var(--accent) 50%, var(--line) 100%); background-size: 200% 100%; animation: sweep 7s linear infinite; margin-bottom: 22px; }
+@keyframes sweep { from { background-position: 0% 0; } to { background-position: -200% 0; } }
 @media (prefers-reduced-motion: reduce) { .process-line { animation: none; background-position: 0 0; } }
 .step .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
 .step h3 { font-size: 1.15rem; margin-top: 10px; }

@@ -1,3 +1,22 @@
+(function () {
+  var revealed = false;
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    document.body.classList.add('is-ready');
+  }
+  try {
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    Promise.race([
+      fontsReady,
+      new Promise(function (resolve) { setTimeout(resolve, 1500); })
+    ]).then(reveal).catch(reveal);
+  } catch (err) {
+    reveal();
+  }
+  setTimeout(reveal, 2500);
+})();
+
 document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   link.addEventListener('click', function (e) {
     var target = document.querySelector(link.getAttribute('href'));
