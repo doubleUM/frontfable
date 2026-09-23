@@ -105,6 +105,7 @@ header.top {
 .mock-old .mgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: clamp(16px,4vw,34px); }
 .mock-old .mbox { background: #DEDBD2; height: clamp(28px,6vw,54px); }
 .mock-old .mline { height: 6px; background: #D2CFC5; margin-top: 8px; width: 80%; }
+.mock-old .wmeta { font-size: clamp(7.5px,1.1vw,9px); color: #A8A39A; margin-top: 6px; }
 
 .mock-new { position: absolute; inset: 0; padding: clamp(16px,4vw,40px); color: var(--ink); }
 .mock-new .mnav { display: flex; gap: 18px; font-size: 10.5px; color: var(--ink-faint); margin-bottom: clamp(10px,2vw,20px); }
@@ -114,6 +115,10 @@ header.top {
 .mock-new .mbtn { display: inline-block; margin-top: 16px; background: var(--accent); color: var(--accent-ink); font-size: 10.5px; font-weight: 700; padding: 9px 18px; border-radius: 999px; }
 .mock-new .mtags { display: flex; gap: 8px; margin-top: clamp(16px,4vw,34px); flex-wrap: wrap; }
 .mock-new .mtags span { font-size: 9.5px; font-family: 'JetBrains Mono', monospace; padding: 4px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); }
+.mock-new .capacity-mini { display: flex; align-items: center; gap: 8px; margin-top: clamp(16px,4vw,32px); font-size: clamp(8px,1.2vw,10px); color: var(--ink-faint); font-family: 'JetBrains Mono', monospace; }
+.mock-new .capacity-mini .dots { display: flex; gap: 2px; }
+.mock-new .capacity-mini .dots i { display: block; width: 6px; height: 6px; border: 1px solid var(--line); background: var(--ink-faint); font-style: normal; }
+.mock-new .capacity-mini .dots i.open { background: transparent; border-color: var(--accent); }
 
 .compare-handle {
   position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--accent);
