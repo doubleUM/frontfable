@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0E">
 <title>FrontFable — Web Design &amp; Development Studio</title>
 <meta name="description" content="FrontFable redesigns company profile websites and builds the web applications behind them.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,13 +17,15 @@
 <header class="top" id="top">
   <div class="nav-inner">
     <a href="#top" class="wordmark">FRONT<span class="dot">FABLE</span></a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       <li><a href="#work">Work</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#about">About</a></li>
+      <li class="nav-links-cta"><a href="#contact">Start a project</a></li>
     </ul>
     <a class="nav-cta" href="#contact">Start a project</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks">Menu</button>
   </div>
 </header>
 
@@ -172,23 +175,23 @@
     </div>
     <div class="work-grid">
       <div class="work-card">
-        <div class="work-visual v1"><span class="badge">Concept</span></div>
+        <div class="work-visual" style="background-image: url('images/crestview.png'); background-size: cover; background-position: top;"><span class="badge">Concept</span></div>
         <div class="work-body">
-          <h3>Aldercreek Capital</h3>
+          <h3>Crestview Consulting</h3>
           <p>An investor-facing company profile rebuilt around the three questions prospective clients ask first.</p>
         </div>
       </div>
       <div class="work-card">
-        <div class="work-visual v2"><span class="badge">Concept</span></div>
+        <div class="work-visual" style="background-image: url('images/huniva.png'); background-size: cover; background-position: top;"><span class="badge">Concept</span></div>
         <div class="work-body">
-          <h3>Northfield Trading Co.</h3>
+          <h3>Huniva</h3>
           <p>An order-tracking portal replacing a shared spreadsheet, built for a small operations team.</p>
         </div>
       </div>
       <div class="work-card">
-        <div class="work-visual v3"><span class="badge">Concept</span></div>
+        <div class="work-visual" style="background-image: url('images/vareska.png'); background-size: cover; background-position: top;"><span class="badge">Concept</span></div>
         <div class="work-body">
-          <h3>Havenwork Studios</h3>
+          <h3>Vareska Motor</h3>
           <p>A studio rebrand paired with a booking flow that cut back-and-forth scheduling emails.</p>
         </div>
       </div>

@@ -17,6 +17,28 @@
   setTimeout(reveal, 2500);
 })();
 
+(function () {
+  var header = document.getElementById('top');
+  var toggle = header && header.querySelector('.nav-toggle');
+  if (!toggle) return;
+  function setOpen(open) {
+    header.classList.toggle('menu-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.textContent = open ? 'Close' : 'Menu';
+  }
+  toggle.addEventListener('click', function () { setOpen(!header.classList.contains('menu-open')); });
+  header.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.addEventListener('click', function () { setOpen(false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && header.classList.contains('menu-open')) { setOpen(false); toggle.focus(); }
+  });
+  document.addEventListener('pointerdown', function (e) {
+    if (header.classList.contains('menu-open') && !header.contains(e.target)) setOpen(false);
+  });
+  window.matchMedia('(min-width: 761px)').addEventListener('change', function (e) { if (e.matches) setOpen(false); });
+})();
+
 document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   link.addEventListener('click', function (e) {
     var target = document.querySelector(link.getAttribute('href'));
@@ -59,6 +81,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     setPos(posFromClientX(e.clientX));
   });
   window.addEventListener('pointerup', function () { dragging = false; });
+  window.addEventListener('pointercancel', function () { dragging = false; });
 
   handle.addEventListener('keydown', function (e) {
     var current = parseFloat(handle.style.left) || 50;
@@ -72,6 +95,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   if (reduceMotion) return;
   document.querySelectorAll('.work-card').forEach(function (card) {
     card.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
       var r = card.getBoundingClientRect();
       var x = (e.clientX - r.left) / r.width - 0.5;
       var y = (e.clientY - r.top) / r.height - 0.5;
