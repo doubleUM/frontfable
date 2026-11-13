@@ -1,16 +1,16 @@
 :root {
-  --bg: #0A0A0E;
-  --surface: #131218;
-  --surface-2: #1B1A22;
+  --bg: #0F0C1D;
+  --surface: #18142B;
+  --surface-2: #211C38;
   --ink: #F5F3ED;
-  --ink-soft: #9C97A8;
-  --ink-faint: #86818F;
-  --ink-ghost: #64606E;
+  --ink-soft: #A29DB4;
+  --ink-faint: #8C879C;
+  --ink-ghost: #6E6886;
   --accent: #FFB020;
   --accent-ink: #241800;
   --accent-2: #6C63FF;
-  --line: #242230;
-  --card-bg: #15141B;
+  --line: #2E2850;
+  --card-bg: #1A162E;
   --gutter: clamp(20px, 5.5vw, 68px);
   --gl: max(var(--gutter), env(safe-area-inset-left, 0px));
   --gr: max(var(--gutter), env(safe-area-inset-right, 0px));
