@@ -39,15 +39,34 @@
   window.matchMedia('(min-width: 761px)').addEventListener('change', function (e) { if (e.matches) setOpen(false); });
 })();
 
-document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-  link.addEventListener('click', function (e) {
-    var target = document.querySelector(link.getAttribute('href'));
-    if (target) {
+(function () {
+  // Smooth wheel scrolling via Lenis. Touch keeps the device's native scrolling,
+  // and visitors who ask for reduced motion get plain scrolling and instant jumps.
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lenis = (!reduceMotion && window.Lenis) ? new Lenis({ autoRaf: true, lerp: 0.1 }) : null;
+
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      var target = href.length > 1 ? document.getElementById(href.slice(1)) : null;
+      if (!target) return;
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+      // The header is sticky, so "#top" means the top of the page, not the header's position.
+      var toTop = href === '#top';
+      if (lenis) {
+        // Lenis reads the html scroll-padding-top itself, so sections land just below the sticky header.
+        lenis.scrollTo(toTop ? 0 : target, {
+          duration: 1.2,
+          easing: function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+        });
+      } else if (toTop) {
+        window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+      } else {
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
   });
-});
+})();
 
 (function () {
   var compare = document.getElementById('compare');

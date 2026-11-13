@@ -37,6 +37,10 @@ body { contain: paint; }
 @supports not (contain: paint) { body { overflow-x: hidden; } }
 body.is-ready { opacity: 1; transition: opacity 0.35s ease; }
 @media (prefers-reduced-motion: reduce) { body.is-ready { transition: none; } }
+/* Lenis smooth scrolling (from lenis/dist/lenis.css) */
+html.lenis, html.lenis body { height: auto; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
 
 h1, h2, h3 { font-family: 'Unbounded', ui-sans-serif, sans-serif; font-weight: 700; margin: 0; text-wrap: balance; }
 .wrap { max-width: 1180px; margin-inline: auto; }
