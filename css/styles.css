@@ -73,18 +73,11 @@ html.lenis, html.lenis body { height: auto; }
 .amb[data-mood="about"]     { --c1: var(--blue-rgb);   --a1: 0.21; --x1: 0%;   --y1: 15%;  --s1: 95vmax; --c2: var(--rose-rgb);   --a2: 0.15; --x2: 100%; --y2: 100%; --s2: 80vmax; }
 .amb[data-mood="contact"]   { --c1: var(--gold-rgb);   --a1: 0.10; --x1: 5%;   --y1: 105%; --s1: 95vmax; --c2: var(--violet-rgb); --a2: 0.22; --x2: 100%; --y2: 0%;   --s2: 90vmax; }
 
-/* Tumbling blocks: an optical-illusion tiling of 3D cubes (images/bg-cubes.svg), drawn only with three shades of the page
-   colour (top = page colour, left and right sides darker), so the cubes seem to flip between being seen from above and
-   from below. It scrolls at about a third of the page's speed (main.js), so the page visibly glides over a deeper surface;
-   shifting by less than one tile height and wrapping is seamless. It is the bottom, opaque layer of the ambient stack with
-   the glows on top, so it replaces the plain page background instead of adding another see-through layer. Every shade is
-   at or below the page colour, so it can only raise text contrast. --tex-tile must match the SVG's height. */
-:root { --tex-tile: 123px; }
-.tex { position: absolute; inset: 0; overflow: hidden; }
-.tex > i {
-  position: absolute; left: 0; right: 0; top: 0; height: calc(100% + var(--tex-tile)); will-change: transform;
-  background: url("../images/bg-cubes.svg") 0 0 / 71px var(--tex-tile), var(--bg);
-}
+/* Solid shapes attached to content, in the same flat style as the statement band: the highlight behind "intervention.",
+   the rose wall behind the work cards, the discs behind the service numbers, the progress line in the process section and
+   the speech bubble behind "Let's talk.". Those marked data-slide in the HTML slide in from their side of the screen as they
+   rise into view and back out as they leave (main.js, transforms only); with JS off or reduced motion they sit in place.
+   Text on them keeps large-text contrast: off-white on violet 5.4:1, on blue 5.0:1; gold on violet 3.3:1. */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 h1, h2, h3 { font-family: 'Unbounded', ui-sans-serif, sans-serif; font-weight: 700; margin: 0; text-wrap: balance; }
@@ -158,7 +151,19 @@ header.top {
 @media (prefers-reduced-motion: reduce) { .hero::before { animation: none; } }
 
 .hero h1 { font-size: clamp(2.1rem, 5.4vw, 3.7rem); line-height: 1.05; margin-top: 16px; max-width: 20ch; }
-.hero h1 .hl { color: var(--accent); }
+.hero h1 .hl { color: var(--accent); position: relative; z-index: 0; margin-left: 0.08em; }
+/* Violet highlight that slams in from the right once the page has faded in, then (main.js) slides out to the right as
+   the heading scrolls away and back in when you return. It overhangs the word by more than its slant (0.3em vs 0.22em),
+   so even at the slanted top-left corner the "i" stays fully inside it; the small extra word space keeps the bottom-left
+   corner clear of the "n" before it. The slam-in only fills backwards, so once it ends the scroll position takes over. */
+.hero h1 .hl-bg {
+  position: absolute; z-index: -1; inset: 0.12em -0.32em 0.02em -0.3em; will-change: transform;
+  background: rgb(var(--violet-rgb)); clip-path: polygon(0.22em 0, 100% 0, calc(100% - 0.22em) 100%, 0 100%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  body.is-ready .hero h1 .hl-bg { animation: slam-in 0.75s cubic-bezier(0.2, 0.9, 0.25, 1) 0.35s backwards; }
+}
+@keyframes slam-in { from { transform: translate3d(100vw, 0, 0); } }
 .hero p.sub { margin-top: 20px; max-width: 52ch; color: var(--ink-soft); font-size: 17px; text-wrap: pretty; }
 
 .browser-frame {
@@ -238,9 +243,18 @@ section { padding-block: clamp(56px, 9vw, 96px); }
 .mrow { position: relative; display: grid; grid-template-columns: 140px 1fr; gap: 20px; padding-block: 36px; border-top: 1px solid var(--line); }
 .mrow:last-child { border-bottom: 1px solid var(--line); }
 @media (max-width: 640px) { .mrow { grid-template-columns: 1fr; } }
+/* Each number sits on a blue disc that rolls in from the left; the number is solid while its disc is there and goes
+   back to the outlined ghost style while the disc is away. The switch is instant (at the disc's halfway point), since a
+   colour transition would repaint the number on every frame. */
 .mrow .ghost-num {
   font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: clamp(3rem, 7vw, 5rem); line-height: 1;
-  color: transparent; -webkit-text-stroke: 2px var(--ink-ghost); align-self: start;
+  color: var(--ink); -webkit-text-stroke: 2px transparent; align-self: start; justify-self: start;
+  position: relative; z-index: 0;
+}
+.mrow .ghost-num.shape-away { color: transparent; -webkit-text-stroke-color: var(--ink-ghost); }
+.num-disc {
+  position: absolute; z-index: -1; left: 50%; top: 50%; width: 1.5em; height: 1.5em; margin: -0.75em 0 0 -0.75em;
+  border-radius: 50%; background: rgb(var(--blue-rgb)); will-change: transform;
 }
 .mrow h3 { font-size: 1.4rem; }
 .mrow p { margin: 12px 0 0; color: var(--ink-soft); max-width: 56ch; font-size: 15px; }
@@ -271,21 +285,25 @@ section { padding-block: clamp(56px, 9vw, 96px); }
 .process-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
 @media (max-width: 780px) { .process-row { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .process-row { grid-template-columns: 1fr; } }
-/* The gold sweep is a strip four line-widths long (two gradient periods) that slides one period per cycle on the GPU.
-   It looks the same as animating background-position but never repaints. */
-.process-line { position: relative; height: 2px; margin-bottom: 22px; overflow: hidden; }
-.process-line::before {
-  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 400%;
-  background: repeating-linear-gradient(90deg, var(--line) 0%, var(--accent) 50%, var(--line) 100%) 0 0 / 50% 100%;
-  transform: translate3d(-50%, 0, 0); animation: sweep 7s linear infinite; will-change: transform;
+/* Progress line: fills with gold as the section scrolls through, led by a gold dot (main.js scales the fill and moves the
+   dot, both on the GPU). With JS off or reduced motion it is simply a full gold line. */
+.process-line { position: relative; height: 2px; margin-bottom: 22px; background: var(--line); }
+.process-line i { position: absolute; inset: 0; background: var(--accent); transform-origin: 0 50%; will-change: transform; }
+.process-line b {
+  display: none; position: absolute; left: -9px; top: -8px; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 6px rgb(var(--gold-rgb) / 0.2); will-change: transform;
 }
-@keyframes sweep { from { transform: translate3d(-50%, 0, 0); } to { transform: translate3d(0, 0, 0); } }
-@media (prefers-reduced-motion: reduce) { .process-line::before { animation: none; } }
+.process-line.is-live b { display: block; }
 .step .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
 .step h3 { font-size: 1.15rem; margin-top: 10px; }
 .step p { color: var(--ink-soft); font-size: 14px; margin: 8px 0 0; }
 
-.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; perspective: 900px; }
+.work-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; perspective: 900px; }
+/* Rose wall the cards stand on: from the left edge of the screen to just past the last card, showing around and below them. */
+.work-wall {
+  position: absolute; z-index: -1; top: 34%; bottom: -40px; left: calc(50% - 50vw); right: -56px;
+  background: rgb(var(--rose-rgb)); clip-path: polygon(0 0, 100% 0, calc(100% - 56px) 100%, 0 100%); will-change: transform;
+}
 @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 620px) { .work-grid { grid-template-columns: 1fr; } }
 .work-card { border: 1px solid var(--line); background: var(--card-bg); display: flex; flex-direction: column; transition: transform 0.15s ease-out, border-color 0.2s ease; text-decoration: none; color: inherit; }
@@ -320,7 +338,29 @@ section { padding-block: clamp(56px, 9vw, 96px); }
 
 .contact-box { text-align: left; padding-block: clamp(20px, 4vw, 30px); }
 .contact-box h2 { font-size: clamp(2.4rem, 8vw, 5.2rem); }
-.contact-box .lead { margin-top: 18px; max-width: 46ch; color: var(--ink-soft); font-size: 16.5px; }
+/* Speech bubble behind "Let's talk.", sliding in from the right. When it lands, main.js adds .is-landed and the heading and
+   bubble give a quick squash-and-stretch pop from the tail, like a chat message arriving. The pop uses the separate
+   `scale` property, so it never fights the bubble's slide transform. */
+.talk { position: relative; z-index: 0; display: inline-block; transform-origin: 0.4em 115%; }
+@media (prefers-reduced-motion: no-preference) {
+  .talk.is-landed { animation: bubble-pop 0.55s ease-out; }
+}
+@keyframes bubble-pop {
+  0% { scale: 1; }
+  30% { scale: 1.07 0.94; }
+  55% { scale: 0.97 1.04; }
+  80% { scale: 1.01 0.99; }
+  100% { scale: 1; }
+}
+.talk-bubble {
+  position: absolute; z-index: -1; inset: 0.2em -0.32em 0.16em -0.3em; border-radius: 0.3em;
+  background: rgb(var(--violet-rgb)); will-change: transform;
+}
+.talk-bubble::after {
+  content: ""; position: absolute; left: 0.55em; top: calc(100% - 1px); width: 0.42em; height: 0.34em;
+  background: inherit; clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+.contact-box .lead { margin-top: 26px; max-width: 46ch; color: var(--ink-soft); font-size: 16.5px; }
 .email-cta {
   margin-top: 30px; display: inline-flex; align-items: baseline; gap: 12px;
   font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.3rem, 3.6vw, 2rem);

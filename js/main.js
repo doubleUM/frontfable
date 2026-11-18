@@ -151,6 +151,8 @@ var scrollFx = (function () {
   window.addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(frame); } }, { passive: true });
   window.addEventListener('resize', queueMeasure);
   window.addEventListener('load', queueMeasure);
+  // Web fonts can change line widths without changing the page height, which the ResizeObserver would miss.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(queueMeasure);
   if ('ResizeObserver' in window) new ResizeObserver(queueMeasure).observe(document.body);
   return { add: function (fx) { effects.push(fx); if (fx.measure) fx.measure(); lastY = -1; frame(); } };
 })();
@@ -159,8 +161,7 @@ function pageTop(el) { return el.getBoundingClientRect().top + (window.scrollY |
 function clamp01(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
 
 // Ambient light: crossfade the background glow to the mood of whichever section sits at the middle
-// of the screen and drift it as that section scrolls by. The tumbling-blocks texture scrolls at a third of the page's
-// speed for a sense of depth.
+// of the screen and drift it as that section scrolls by.
 (function () {
   var amb = document.querySelector('.ambient');
   var sections = [].slice.call(document.querySelectorAll('[data-mood]'));
@@ -168,13 +169,11 @@ function clamp01(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
   var moods = sections.map(function (s) { return s.getAttribute('data-mood'); });
   var layers = [].slice.call(amb.querySelectorAll('.amb'));
   var blobs = layers.map(function (l) { return l.children; });
-  var tex = amb.querySelector('.tex > i');
-  var tops = [], heights = [], tile = 123, front = 0, current = null, lastP = -1, lastTex = null;
+  var tops = [], heights = [], front = 0, current = null, lastP = -1;
   scrollFx.add({
     measure: function () {
       tops = sections.map(pageTop);
       heights = sections.map(function (s) { return s.offsetHeight; });
-      tile = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tex-tile')) || 123;
     },
     update: function (y, vh) {
       var mid = y + vh * 0.5, k = 0;
@@ -188,12 +187,7 @@ function clamp01(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
         lastP = -1;
       }
       if (reduceMotion) return;
-      if (tex) {
-        var d = -((y * 0.35) % tile);
-        d = Math.round(d * 10) / 10;
-        if (d !== lastTex) { lastTex = d; tex.style.transform = 'translate3d(0,' + d + 'px,0)'; }
-      }
-      var p = Math.round(clamp01((mid - tops[k]) / Math.max(1, heights[k])) * 400) / 400;
+      var p =Math.round(clamp01((mid - tops[k]) / Math.max(1, heights[k])) * 400) / 400;
       if (p === lastP) return;
       lastP = p;
       var b = blobs[front];
@@ -273,6 +267,75 @@ function clamp01(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
       if (x === lastX) return;
       lastX = x;
       band.style.transform = 'translate3d(' + x + 'px,0,0)';
+    }
+  });
+})();
+
+// Solid shapes attached to content (the rose wall behind the work cards, the discs behind the service numbers, the
+// speech bubble behind "Let's talk."): each slides in from its side of the screen as it rises into view and back out
+// as it leaves, the same motion as the statement band. Shapes marked data-stay (the bubble at the end of the page) don't
+// leave once they've arrived; they only slide back if you scroll up past them. Shapes marked data-bounce give their parent
+// .is-landed (a short pop animation in the CSS) each time they arrive. While a shape is away its parent gets
+// .shape-away, which the service numbers use to go back to their outlined style. Only transforms change while scrolling.
+(function () {
+  var els = [].slice.call(document.querySelectorAll('[data-slide]'));
+  if (!els.length || reduceMotion) return;
+  function ease(t) { t = clamp01(t); return t * t * (3 - 2 * t); }
+  var items = els.map(function (el) {
+    return { el: el, host: el.parentNode, dir: el.getAttribute('data-slide') === 'left' ? -1 : 1, stay: el.hasAttribute('data-stay'), bounce: el.hasAttribute('data-bounce'), landed: false, last: null, away: null };
+  });
+  scrollFx.add({
+    measure: function () {
+      var W = document.documentElement.clientWidth, sy = window.scrollY || window.pageYOffset;
+      items.forEach(function (it) {
+        var r = it.el.getBoundingClientRect();
+        // The rect includes the shape's current sideways offset (from scrolling, or the hero highlight's slam-in
+        // animation), so read that back from the computed transform and take it out.
+        var tf = getComputedStyle(it.el).transform, dx = 0;
+        if (tf && tf !== 'none' && window.DOMMatrixReadOnly) dx = new DOMMatrixReadOnly(tf).m41;
+        it.top = r.top + sy;
+        it.h = r.height;
+        // Far enough to clear the edge of the screen completely.
+        it.dist = (it.dir > 0 ? W - (r.left - dx) : r.right - dx) + 20;
+        it.last = null;
+      });
+    },
+    update: function (y, vh) {
+      for (var i = 0; i < items.length; i++) {
+        var it = items[i], t = it.top - y;
+        // In: from its top entering at 95% of the screen until it reaches 55%. Out: once its top passes 15%.
+        var out = it.stay ? 0 : ease((vh * 0.15 - t) / Math.max(it.h * 0.85, vh * 0.3));
+        var hide = clamp01(1 - ease((vh * 0.95 - t) / (vh * 0.4)) + out);
+        var x = Math.round(hide * it.dist) * it.dir;
+        if (x !== it.last) { it.last = x; it.el.style.transform = 'translate3d(' + x + 'px,0,0)'; }
+        var away = hide > 0.5;
+        if (away !== it.away) { it.away = away; it.host.classList.toggle('shape-away', away); }
+        // data-bounce: pop once each time the shape fully lands; re-arm after it has slid a good way back out.
+        if (it.bounce) {
+          if (hide === 0 && !it.landed) { it.landed = true; it.host.classList.add('is-landed'); }
+          else if (hide > 0.3 && it.landed) { it.landed = false; it.host.classList.remove('is-landed'); }
+        }
+      }
+    }
+  });
+})();
+
+// Process: the line above the four steps fills with gold as the section scrolls through, led by a gold dot.
+(function () {
+  var line = document.querySelector('.process-line'), row = document.querySelector('.process-row');
+  var fill = line && line.querySelector('i'), dot = line && line.querySelector('b');
+  if (!fill || !dot || !row || reduceMotion) return;
+  line.classList.add('is-live');
+  var top = 0, span = 1, width = 0, last = -1;
+  scrollFx.add({
+    measure: function () { top = pageTop(line); span = Math.max(1, pageTop(row) + row.offsetHeight - top); width = line.offsetWidth; last = -1; },
+    update: function (y, vh) {
+      // Starts as the line reaches 80% down the screen; complete once the last step is 55% down.
+      var p = Math.round(clamp01((vh * 0.8 - (top - y)) / (span + vh * 0.25)) * 1000) / 1000;
+      if (p === last) return;
+      last = p;
+      fill.style.transform = 'scaleX(' + p + ')';
+      dot.style.transform = 'translate3d(' + (p * width).toFixed(1) + 'px,0,0)';
     }
   });
 })();
